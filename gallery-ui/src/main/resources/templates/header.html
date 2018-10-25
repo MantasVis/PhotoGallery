@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script rel="script" type="text/javascript" th:src="@{/css/particles.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<div class="topnav" th:fragment="header">
+    <a class="active" href="/">Home</a>
+
+    <div class="dropdown">
+        <button class="dropbtn">Popular tags</button>
+        <div class="dropdown-content">
+            <div th:remove="tag" th:utext="${tags}"></div>
+        </div>
+    </div>
+
+    <form th:action="@{/login}" sec:authorize="!isAuthenticated()" class="login-container">
+        <button type="submit" name="status" value="main">Log In</button>
+    </form>
+    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="login-container">
+        <button type="submit">Log Out</button>
+    </form>
+
+    <a class="active" href="/upload">Upload a photo</a>
+
+    <div class="search-container">
+        <form action="" method="post">
+            <input href="/search" type="text" placeholder="Search.." name="search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>

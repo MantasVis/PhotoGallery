@@ -1,0 +1,332 @@
+.thumb{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.img-thumbnail {
+    background-image: -webkit-repeating-radial-gradient(circle, white, #232741);
+    border: none;
+}
+
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+    background-color: #bbbbbb;
+}
+
+.emptyGallery {
+    position: relative;
+    margin-top: 220px;
+}
+
+.emptyGallery h2 {
+    font-size: 4em;
+    color: white;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 13px;
+    color: white;
+    text-align: center;
+    background-color: transparent;
+}
+
+.footer a {
+    font-size: 17px;
+}
+
+.topnav a {
+    position: relative;
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 15px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #bcbcbc;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: transparent;
+    color: white;
+}
+
+.topnav a.active:hover {
+    background-color: transparent;
+    color: #999999;
+}
+
+.topnav .search-container, .topnav .login-container {
+    float: right;
+    position: relative;
+}
+
+.welcomeMessage {
+    float: right;
+}
+
+.topnav input[type=text] {
+    padding: 6px 6px 6px 15px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    color: white;
+}
+
+.topnav .search-container button, .welcomeMessage button, .login-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: transparent;
+}
+
+.topnav .search-container button:hover, .welcomeMessage button:hover, .upload-container button:hover, .infoContainer button:hover, .edit-container button:hover,
+.delete-container button:hover, .login-container button:hover, .signin-container button:hover {
+    background: transparent;
+    color: #999999;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav .search-container, .topnav, .login-container {
+        float: none;
+    }
+    .topnav a, .topnav input[type=text], .topnav .search-container button, .topnav, .login-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+    .topnav input[type=text] {
+        border: 1px solid #bcbcbc;
+    }
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(0,0,0,.2);
+    border-radius: 25px;
+    min-width: 160px;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: transparent;
+    color: #999999;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: grid;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: transparent;
+    color: #999999;
+}
+
+@media screen and (max-width: 1650px) {
+    .dropdown-content {
+        background-color: rgba(0,0,0,.8);
+    }
+}
+
+.search-container input {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 25px;
+}
+
+input:focus, button:focus {
+    outline: none;
+}
+
+.signin-container {
+    position: relative;
+}
+
+.upload-container input[type=text], .edit-container input[type=text], .upload-container input[type=file], .upload-container label, .signin-container input {
+    width: 50%;
+    margin-top: 20px;
+    padding: 6px 6px 6px 15px;
+    font-size: 17px;
+    background-color: rgba(0,0,0,.2);
+    border: none;
+    border-radius: 25px;
+    color: white;
+}
+
+.upload-container button, .edit-container button, .delete-container button, .signin-container button {
+    display: block;
+    padding: 6px 10px;
+    margin-top: 20px;
+    margin-right: 16px;
+    background: transparent;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    color: white;
+}
+
+.imageView-container {
+    height: 50%;
+    margin-top: 20px;
+    position: relative;
+}
+
+.imageContainer {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding: 34.37% 0 0 0; /* 34.37% = 100 / (w / h) = 100 / (640 / 220) */
+}
+
+.imageContainer img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.infoContainer {
+    position:relative;
+}
+
+.infoContainer button {
+    padding: 6px 10px;
+    margin-top: 20px;
+    margin-right: 16px;
+    background-color: rgba(0,0,0,.2);
+    border-radius: 25px;
+    color: white;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-container button, .upload-container button, .signin-container button, .edit-container button {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 25px;
+}
+
+.infoContainer button:hover, .delete-container button:hover, .upload-container button:hover, .signin-container button:hover, .edit-container button:hover {
+    background-color: rgba(0,0,0,.2);
+}
+
+.infoContainer form {
+    display: inline;
+}
+
+.imageInfo {
+    color: white !important;
+}
+
+.deleteConfirmation {
+    margin-top: 20px;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #4CAF50;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #3e8e41;
+}
+
+.uploadNotificationWindow {
+    position: relative;
+    margin-top: 15px;
+    color: rgba(255, 0, 0, 0.68);
+}
+
+.loginError {
+    margin-top: 15px;
+    color: red;
+}
+
+#particles-js {
+    position: fixed;
+    top:0;
+    width:100%;
+    height:100%;
+    background: #232741;
+}
+
+#particles-js-canvas-el {
+    position: fixed;
+    z-index: -999;
+}
