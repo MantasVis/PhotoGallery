@@ -16,25 +16,15 @@
 
 <div class="signin-container">
     <center>
-        <div class="loginError" th:if="${param.error}">
-            Invalid username or password.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <input type="text" placeholder="Username" name="username">
-            <input type="password" placeholder="Password" name="password">
-            <button type="submit">Sign in</button>
+        <form th:action="@{/admin/users}">
+            <button type="submit">Manage Users</button>
         </form>
-            <form th:action="@{/register}">
-                <button type="submit">Sign up</button>
-            </form>
+        <form th:action="@{/admin}">
+            <button type="submit">Coming soon</button>
+        </form>
     </center>
 </div>
 
-<center>
-    <div class="uploadNotificationWindow" th:if="${message}">
-        <h2 th:text="${message}"/>
-    </div>
-</center>
 
 <div th:replace="/footer :: footer"></div>
 

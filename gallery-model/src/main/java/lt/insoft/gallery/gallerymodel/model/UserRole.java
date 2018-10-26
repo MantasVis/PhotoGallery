@@ -28,7 +28,7 @@ public class UserRole implements Serializable {
     @Column(name = "user_role_id")
     @NotNull
     @Getter @Setter
-    private int userRoleId;
+    private Long userRoleId;
 
     @NotNull
     @Column(name = "role")
@@ -40,8 +40,7 @@ public class UserRole implements Serializable {
     @Getter @Setter
     private User user;
 
-    public UserRole(int userRoleId, @NotNull String role) {
-        this.userRoleId = userRoleId;
+    public UserRole(@NotNull String role) {
         this.role = role;
     }
 }

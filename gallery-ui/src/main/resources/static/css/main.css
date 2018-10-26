@@ -10,6 +10,17 @@
 
 * {box-sizing: border-box;}
 
+*:focus {
+    outline: 0;
+}
+
+a { color: inherit; }
+
+a:hover {
+    color: #bcbcbc;
+    text-decoration: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -39,6 +50,7 @@ body {
     color: white;
     text-align: center;
     background-color: transparent;
+    display: inline-block;
 }
 
 .footer a {
@@ -88,7 +100,7 @@ body {
     color: white;
 }
 
-.topnav .search-container button, .welcomeMessage button, .login-container button {
+.topnav .search-container button, .welcomeMessage button, .login-container button, .footer button {
     float: right;
     padding: 6px 10px;
     margin-top: 8px;
@@ -101,7 +113,7 @@ body {
 }
 
 .topnav .search-container button:hover, .welcomeMessage button:hover, .upload-container button:hover, .infoContainer button:hover, .edit-container button:hover,
-.delete-container button:hover, .login-container button:hover, .signin-container button:hover {
+.delete-container button:hover, .login-container button:hover, .signin-container button:hover, .footer button:hover {
     background: transparent;
     color: #999999;
 }
@@ -263,12 +275,17 @@ input:focus, button:focus {
     cursor: pointer;
 }
 
-.delete-container button, .upload-container button, .signin-container button, .edit-container button {
+.delete-container button, .upload-container button, .signin-container button, .edit-container button, .footer button {
     background-color: rgba(0,0,0,.2);
     border-radius: 25px;
+    color: white;
 }
 
-.infoContainer button:hover, .delete-container button:hover, .upload-container button:hover, .signin-container button:hover, .edit-container button:hover {
+.footer button {
+    float: none;
+}
+
+.infoContainer button:hover, .delete-container button:hover, .upload-container button:hover, .signin-container button:hover, .edit-container button:hover, .footer button:hover {
     background-color: rgba(0,0,0,.2);
 }
 
@@ -329,4 +346,73 @@ input:focus, button:focus {
 #particles-js-canvas-el {
     position: fixed;
     z-index: -999;
+}
+
+table {
+    border-collapse: separate;
+    width: 50%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    color: white;
+    padding: 8px;
+}
+
+table tr:first-child {
+    background-color: rgba(0,0,0,.5);
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(0,0,0,.2);
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(0,0,0,.3);
+}
+
+.search-container form select {
+    display: block;
+    background-color: rgba(0,0,0,.4);
+    width: 20%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    text-align: center;
+    font-size: 1.1em;
+    margin-top: 15px;
+    color: white;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border:1px solid transparent;
+}
+
+option {
+    background-color: rgba(1, 1, 1, .8);
+}
+
+option:last-child {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+select:focus {
+    outline: none;
 }

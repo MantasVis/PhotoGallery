@@ -19,14 +19,12 @@
         <div class="loginError" th:if="${param.error}">
             Invalid username or password.
         </div>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/register}" method="post">
             <input type="text" placeholder="Username" name="username">
             <input type="password" placeholder="Password" name="password">
-            <button type="submit">Sign in</button>
+            <input type="password" placeholder="Repeat Password" name="passwordRepeat">
+            <button type="submit">Sign up</button>
         </form>
-            <form th:action="@{/register}">
-                <button type="submit">Sign up</button>
-            </form>
     </center>
 </div>
 

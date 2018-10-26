@@ -19,7 +19,7 @@
             <form th:action="@{/edit}" method="post">
                 <input type="text" th:value="${descriptionValue}" name="photo-desc">
                 <input type="text" th:value="${tagValue}" name="photo-tags">
-                <button type="submit" th:value="${imageId}" onclick="confirmationMessage()" name="imageId">Edit</button>
+                <button type="submit" th:value="${imageId}" name="imageId">Edit</button>
             </form>
         </center>
     </div>

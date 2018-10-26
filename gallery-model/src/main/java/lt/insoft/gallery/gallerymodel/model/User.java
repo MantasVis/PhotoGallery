@@ -1,6 +1,7 @@
 package lt.insoft.gallery.gallerymodel.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,20 +22,24 @@ public class User implements Serializable {
 
     @Id
     @NotNull
-    @Size(max = 45)
     @Column(name = "username")
     @Getter @Setter
     private String username;
 
     @NotNull
-    @Size(max = 45)
     @Column(name = "password")
     @Getter @Setter
     private String password;
 
-    public User(@NotNull String username, @NotNull String password)
+    @NotNull
+    @Column(name = "creationDate")
+    @Getter @Setter
+    private String date;
+
+    public User(@NotNull String username, @NotNull String password, @NotNull String date)
     {
         this.username = username;
         this.password = password;
+        this.date = date;
     }
 }

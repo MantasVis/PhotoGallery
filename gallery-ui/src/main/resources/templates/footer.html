@@ -13,6 +13,10 @@
 <div class = "footer" th:fragment="footer">
     <a sec:authorize="!isAuthenticated()">Browsing as guest</a>
     <a sec:authorize="isAuthenticated()">Logged in as [[${#httpServletRequest.remoteUser}]]</a>
+    <form sec:authorize="hasRole('ADMIN')" th:action="@{/admin}">
+        <button type="submit">Admin Panel</button>
+    </form>
+
 </div>
 
 </body>

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import lt.insoft.gallery.gallerymodel.model.Picture;
 import lt.insoft.gallery.gallerymodel.model.Tag;
+import lt.insoft.gallery.gallerymodel.model.UserRole;
 import lt.insoft.gallery.gallerymodel.repository.PictureRepository;
 import lt.insoft.gallery.gallerymodel.repository.TagRepository;
+import lt.insoft.gallery.gallerymodel.repository.UserRepository;
+import lt.insoft.gallery.gallerymodel.repository.UserRoleRepository;
 
 @Service
 public class GenerateHtml {
@@ -18,11 +21,13 @@ public class GenerateHtml {
 
     private final PictureRepository pictureRepository;
     private final TagRepository tagRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    public GenerateHtml(PictureRepository pictureRepository, TagRepository tagRepository)
+    public GenerateHtml(PictureRepository pictureRepository, TagRepository tagRepository, UserRoleRepository userRoleRepository)
     {
         this.pictureRepository = pictureRepository;
         this.tagRepository = tagRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     //--------------------------------PICTURE REPOSITORY--------------------------------------
@@ -66,12 +71,19 @@ public class GenerateHtml {
     private Picture getPictureById(Long id) {
         return pictureRepository.getPictureById(id);
     }
-    //---------------------------------TAG REPOSITORY--------------------------------------
+    //---------------------------------TAG REPOSITORY---------------------------------------
     /**
      *  Returns all tags
      */
     private List<Tag> getAllTags() {
         return tagRepository.getAllBy();
+    }
+    //-------------------------------USER ROLE REPOSITORY-----------------------------------
+    /**
+     *  Returns all users and their roles
+     */
+    List<UserRole> getAllUserRoles() {
+        return userRoleRepository.getAllBy();
     }
     //--------------------------------------------------------------------------------------
 
@@ -137,5 +149,18 @@ public class GenerateHtml {
     public String getImageDate(Long id) {
         Picture picture = getPictureById(id);
         return picture.getDate();
+    }
+
+    public String createTableOfUsers() {
+        List<UserRole> userRoles = getAllUserRoles();
+        StringBuilder html = new StringBuilder();
+        for (UserRole userRole : userRoles) {
+            html.append("<tr>");
+            html.append("<td>").append("<a href=\"/admin/users?userid=" + userRole.getUserRoleId()).append("\"</a>");
+            html.append(userRole.getUser().getUsername()).append("</td>");
+            html.append("<td>").append(userRole.getRole()).append("</td>");
+            html.append("</tr>");
+        }
+        return String.valueOf(html);
     }
 }

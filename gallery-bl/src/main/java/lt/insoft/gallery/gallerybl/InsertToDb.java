@@ -9,22 +9,35 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import lt.insoft.gallery.gallerymodel.model.Picture;
 import lt.insoft.gallery.gallerymodel.model.Tag;
+import lt.insoft.gallery.gallerymodel.model.User;
+import lt.insoft.gallery.gallerymodel.model.UserRole;
 import lt.insoft.gallery.gallerymodel.repository.PictureRepository;
 import lt.insoft.gallery.gallerymodel.repository.TagRepository;
+import lt.insoft.gallery.gallerymodel.repository.UserRepository;
+import lt.insoft.gallery.gallerymodel.repository.UserRoleRepository;
 
 @Component
 public class InsertToDb {
 
     private final PictureRepository pictureRepository;
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    public InsertToDb(PictureRepository pictureRepository, TagRepository tagRepository) {
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public InsertToDb(PictureRepository pictureRepository, TagRepository tagRepository, UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.pictureRepository = pictureRepository;
         this.tagRepository = tagRepository;
+        this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     //---------------------------------TAG REPOSITORY--------------------------------------
@@ -55,7 +68,58 @@ public class InsertToDb {
     public Set<Tag> pictureTagsByPictureId(Long id) {
         return pictureRepository.pictureTagsByPictureId(id);
     }
-    //--------------------------------------------------------------------------------------
+
+    //----------------------------------USER REPOSITORY----------------------------------------
+    /**
+     *  Returns user by username
+     */
+    private User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    /**
+     *  Returns user count
+     */
+    private int getUserCount() {
+        return userRepository.getUserCount();
+    }
+
+    /**
+     *  Returns date by username
+     */
+    public String dateByUsername(String username) {
+        return userRepository.findDateByUsername(username);
+    }
+    //---------------------------------USER ROLE REPOSITORY-------------------------------------
+    /**
+     *  Returns role by name
+     */
+    private UserRole getUserRoleByRole(String role) {
+        return userRoleRepository.getUserRoleByRole(role);
+    }
+
+    /**
+     *  Returns username by role id
+     */
+    public String usernameByRoleId(Long id) {
+        User user = userRoleRepository.findUsernameByRoleId(id);
+        return user.getUsername();
+    }
+
+    /**
+     *  Returns role name by role id
+     */
+    public String roleById(Long id) {
+        return userRoleRepository.findRoleNameById(id);
+    }
+
+    /**
+     *  Returns role by id
+     */
+    public UserRole findRoleById(Long id) {
+        return userRoleRepository.findRoleById(id);
+    }
+    //------------------------------------------------------------------------------------------
 
     public void newPicture(Object[] photoData) {
 
@@ -82,7 +146,6 @@ public class InsertToDb {
                 generateTags(picture, tagSet, tagList);
             }
 
-
             picture.setTags(tagSet);
             pictureRepository.save(picture);
         }
@@ -93,9 +156,14 @@ public class InsertToDb {
         Set<Tag> newTagSet = new HashSet<>();
         Set<Tag> originalTagSet = picture.getTags();
 
+        if (description.equals("")) {
+            description = null;
+        }
         if (!tags.equals("")) {
             ArrayList<String> tagList = new ArrayList<>(Arrays.asList(tags.split(", ")));
             generateTags(picture, newTagSet, tagList);
+        } else {
+            newTagSet = null;
         }
 
         picture.setDescription(description);
@@ -142,5 +210,43 @@ public class InsertToDb {
                 tagRepository.deleteByTagName(t.getName());
             }
         }
+    }
+
+    public String registerNewAccount(String username, String password, String repeatPassword) {
+        if (!password.equals(repeatPassword))
+        {
+            return "The passwords did not match";
+        }
+
+        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+
+        User exists = findByUsername(username);
+        if (exists != null) {
+            return "Username already exists";
+        }
+
+        DateFormat format  = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
+        Date now = new Date();
+        String date = format.format(now);
+
+        User newUser = new User(username, encryptedPassword, date);
+        UserRole role;
+
+        if (getUserCount() == 0) {
+            role = new UserRole("ADMIN");
+        } else {
+            role = new UserRole("USER");
+        }
+        role.setUser(newUser);
+        userRepository.save(newUser);
+        userRoleRepository.save(role);
+
+        return "Registration complete";
+    }
+
+    public void updateRoles(String roleName, Long id) {
+        UserRole role = findRoleById(id);
+        role.setRole(roleName);
+        userRoleRepository.save(role);
     }
 }

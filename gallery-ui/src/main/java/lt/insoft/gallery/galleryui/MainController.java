@@ -32,6 +32,7 @@ public class MainController {
     private final String image = "imageSource";
     private final String tagValue = "tagValue";
     private final String imageId = "imageId";
+    private final String table = "table";
 
     private final String htmlGallery = "gallery";
     private final String htmlUpload = "upload";
@@ -39,6 +40,11 @@ public class MainController {
     private final String htmlImageView = "imageView";
     private final String htmlEdit = "editImage";
     private final String htmlDelete = "deleteImage";
+    private final String htmlAdmin = "adminMenu";
+    private final String htmlAdminUsers = "adminUsers";
+    private final String htmlRegister = "register";
+    private final String htmlEditUsers = "editUser";
+
     private final String redirectToMain = "redirect:/";
     private final String redirectUpload = "redirect:/upload";
 
@@ -226,6 +232,72 @@ public class MainController {
         }
     }
 
+    @RequestMapping(value = "/register")
+    public String register(Map<String, String> model) {
+        model.put(tags, this.allTags());
+        return htmlRegister;
+    }
+
+    @RequestMapping(value = "/register", method = { RequestMethod.POST, RequestMethod.GET}, params = ("username"))
+    public String register(Map<String, String> model, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("passwordRepeat") String passwordRepeat,
+            RedirectAttributes redirectAttributes) {
+        String message = registerUser(username, password, passwordRepeat);
+        model.put(tags, this.allTags());
+        if (message == null) {
+            return htmlLogin;
+        } else {
+            redirectAttributes.addFlashAttribute("message", message);
+            if (message.contains("complete")) {
+                return "redirect:/login";
+            } else {
+                return "redirect:/register";
+            }
+        }
+    }
+
+    @RequestMapping(value = "/admin")
+    public String adminMenu(Map<String, String> model) {
+        model.put(tags, this.allTags());
+        return htmlAdmin;
+    }
+
+    @RequestMapping(value = "/admin/users")
+    public String adminUsers(Map<String, String> model) {
+        model.put(table, this.allUsers());
+        model.put(tags, this.allTags());
+        return htmlAdminUsers;
+    }
+
+    @RequestMapping(value = "/admin/users", params = ("userid"))
+    public String editUser(Map<String, String> model, @RequestParam("userid") Long userid) {
+        String username = this.usernameByRoleId(userid);
+        model.put("username", username);
+        model.put("date", this.dateByUsername(username));
+
+        String role = this.roleById(userid);
+        String otherRole;
+        if (role.equals("ADMIN")) {
+            otherRole = "USER";
+        } else {
+            otherRole = "ADMIN";
+        }
+
+        model.put("role", role);
+        model.put("otherRole", otherRole);
+        model.put("userId", String.valueOf(userid));
+        model.put(table, this.allUsers());
+        model.put(tags, this.allTags());
+        return htmlEditUsers;
+    }
+
+    @RequestMapping(value = "/admin/users", method = { RequestMethod.POST, RequestMethod.GET}, params = "role")
+    public String editUsers(Map<String, String> model, @RequestParam("role") String role, @RequestParam("userId") Long userid) {
+        updateRoles(role, userid);
+        model.put(table, this.allUsers());
+        model.put(tags, this.allTags());
+        return htmlAdminUsers;
+    }
+
     private String allPictures() {
         return generateHtml.createDivs();
     }
@@ -262,6 +334,10 @@ public class MainController {
         insertToDb.deletePhoto(imageId);
     }
 
+    private String allUsers() {
+        return generateHtml.createTableOfUsers();
+    }
+
     private String redirectToCurrent(HttpServletRequest request) {
         String referer = request.getHeader("Referer");
         String[] link = referer.split("/");
@@ -277,5 +353,25 @@ public class MainController {
 
     private Set<Tag> pictureTagsByPictureId(Long id) {
         return insertToDb.pictureTagsByPictureId(id);
+    }
+
+    private String registerUser(String username, String password, String repeatPassword) {
+        return insertToDb.registerNewAccount(username, password, repeatPassword);
+    }
+
+    private String usernameByRoleId(Long id) {
+        return insertToDb.usernameByRoleId(id);
+    }
+
+    private String dateByUsername(String username) {
+        return insertToDb.dateByUsername(username);
+    }
+
+    private String roleById(Long id) {
+        return insertToDb.roleById(id);
+    }
+
+    private void updateRoles(String roles, Long id) {
+        insertToDb.updateRoles(roles, id);
     }
 }

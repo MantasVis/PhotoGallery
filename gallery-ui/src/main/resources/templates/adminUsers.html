@@ -16,26 +16,15 @@
 
 <div class="signin-container">
     <center>
-        <div class="loginError" th:if="${param.error}">
-            Invalid username or password.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <input type="text" placeholder="Username" name="username">
-            <input type="password" placeholder="Password" name="password">
-            <button type="submit">Sign in</button>
-        </form>
-            <form th:action="@{/register}">
-                <button type="submit">Sign up</button>
-            </form>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+            <div th:remove="tag" th:utext="${table}"></div>
+        </table>
     </center>
 </div>
-
-<center>
-    <div class="uploadNotificationWindow" th:if="${message}">
-        <h2 th:text="${message}"/>
-    </div>
-</center>
-
 <div th:replace="/footer :: footer"></div>
 
 <script type="text/javascript" th:src="@{/js/particles.js}"></script>
