@@ -10,7 +10,6 @@ import lt.insoft.gallery.gallerymodel.model.Tag;
 import lt.insoft.gallery.gallerymodel.model.UserRole;
 import lt.insoft.gallery.gallerymodel.repository.PictureRepository;
 import lt.insoft.gallery.gallerymodel.repository.TagRepository;
-import lt.insoft.gallery.gallerymodel.repository.UserRepository;
 import lt.insoft.gallery.gallerymodel.repository.UserRoleRepository;
 
 @Service
@@ -156,7 +155,7 @@ public class GenerateHtml {
         StringBuilder html = new StringBuilder();
         for (UserRole userRole : userRoles) {
             html.append("<tr>");
-            html.append("<td>").append("<a href=\"/admin/users?userid=" + userRole.getUserRoleId()).append("\"</a>");
+            html.append("<td>").append("<a href=\"/admin/users?userid=").append(userRole.getUserRoleId()).append("\"</a>");
             html.append(userRole.getUser().getUsername()).append("</td>");
             html.append("<td>").append(userRole.getRole()).append("</td>");
             html.append("</tr>");
